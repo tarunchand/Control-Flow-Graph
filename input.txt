@@ -1,0 +1,34 @@
+main()
+{
+    int a,b,j=1;
+    cin>>a>>b;
+    if(a>b)
+    {
+        cout<<a;
+    }
+    else
+    {
+        cout<<b;
+    }
+
+    for(int i=0;i<10;i++)
+    {
+        cout<<a++;
+        ++a;
+    }
+    while(j!=10)
+    {
+        cout<<j++;
+        a=b*j;
+        cout<<a<<b<<j
+    }
+
+    return 0;
+
+
+
+
+
+
+
+}
