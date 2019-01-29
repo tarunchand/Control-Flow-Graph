@@ -9,6 +9,8 @@ def CFG():
 
     vertices=[1]
 
+    edgess=[]
+
     edges=zeros((15,15),int)
 
     lines=[]
@@ -21,9 +23,11 @@ def CFG():
             vertices.append(vertexCount)
             start=vertexCount
             edges[vertexCount-1][vertexCount]=1
+            edgess.append(str(vertexCount-1)+"-->"+str(vertexCount))
             vertexCount+=1
             vertices.append(vertexCount)
             edges[vertexCount-1][vertexCount]=1; end1=vertexCount;
+            edgess.append(str(vertexCount-1)+"-->"+str(vertexCount))
             while(lines[i].find('}')==-1):
                 i+=1
             i+=1
@@ -32,10 +36,13 @@ def CFG():
                 vertices.append(vertexCount)
                 end2=vertexCount
                 edges[start][end2]=1
+                edgess.append(str(start) + "-->" + str(end2))
                 vertexCount += 1
                 vertices.append(vertexCount)
                 edges[end1][vertexCount]=1
+                edgess.append(str(end1) + "-->" + str(vertexCount))
                 edges[end2][vertexCount]=1
+                edgess.append(str(end2) + "-->" + str(vertexCount))
                 while(lines[i].find('}')==-1):
                     i+=1
                 i+=1
@@ -43,16 +50,19 @@ def CFG():
                 vertexCount += 1
                 vertices.append(vertexCount)
                 edges[end1][vertexCount]=1
-
+                edgess.append(str(end1) + "-->" + str(vertexCount))
 
         elif(lines[i].find('for')!=-1):
             vertexCount += 1
             vertices.append(vertexCount)
             edges[vertexCount-1][vertexCount]=1
+            edgess.append(str(vertexCount-1)+"-->"+str(vertexCount))
             vertexCount += 1
             vertices.append(vertexCount)
             edges[vertexCount - 1][vertexCount] = 1
+            edgess.append(str(vertexCount-1)+"-->"+str(vertexCount))
             edges[vertexCount-2][vertexCount] = 1
+            edgess.append(str(vertexCount-2)+"-->"+str(vertexCount))
             while(lines[i].find('}')==-1):
                 i+=1
             i+=1
@@ -61,9 +71,13 @@ def CFG():
             vertexCount += 1
             vertices.append(vertexCount)
             edges[vertexCount - 1][vertexCount] = 1
+            edgess.append(str(vertexCount-1)+"-->"+str(vertexCount))
             vertexCount += 1
             vertices.append(vertexCount)
             edges[vertexCount - 1][vertexCount] = 1
+            edgess.append(str(vertexCount-1)+"-->"+str(vertexCount))
+            edges[vertexCount - 2][vertexCount] = 1
+            edgess.append(str(vertexCount-2)+"-->"+str(vertexCount))
             while (lines[i].find('}') == -1):
                 i += 1
             i += 1
@@ -93,7 +107,7 @@ def CFG():
 
     g.close()
 
-    return vertexCount,predicates,vertices,edges
+    return vertexCount,predicates,vertices,edges,edgess
 
 def Return(frame):
     frame.destroy()
@@ -135,6 +149,26 @@ def edges(frame):
     label.grid()
     label = Label(frame, text=str(values[3]), font='Verdana 30 bold')
     label.grid()
+    ret = Button(frame, text='Return', height=5, width=30, font='Verdana 12 bold', command=lambda: Return(frame))
+    ret.grid()
+
+def edgess(frame):
+    values = CFG()
+    r=1;c=0;
+    frame.destroy()
+    frame = Frame(root)
+    frame.pack(fill=X)
+    s = "Edges of the Control Flow Graph are "
+    label = Label(frame, text=s, font='Verdana 30 bold')
+    label.grid()
+    for i in values[4]:
+        label = Label(frame, text=i, font='Verdana 30 bold')
+        label.grid(row=r,column=c)
+        c+=1
+        if(c>3):
+            r+=1
+            c=0
+
     ret = Button(frame, text='Return', height=5, width=30, font='Verdana 12 bold', command=lambda: Return(frame))
     ret.grid()
 
@@ -194,7 +228,7 @@ def main():
 
     Nodes.pack(side='top')
 
-    Edges=Button(frame,text='Edges',height=5,width=30,font='Verdana 12 bold',command=lambda: edges(frame))
+    Edges=Button(frame,text='Edges',height=5,width=30,font='Verdana 12 bold',command=lambda: edgess(frame))
 
     Edges.pack(side='top')
 
@@ -210,7 +244,7 @@ def main():
 
     IndependentPaths.pack(side='top')
 
-    Refresh=Button(frame,text='Exec',height=7,width=30,font='Verdana 12 bold',command=CFG)
+    Refresh=Button(frame,text='Adjacency Matrix',height=7,width=30,font='Verdana 12 bold',command=lambda: edges(frame))
 
     Refresh.pack(side='top')
 
