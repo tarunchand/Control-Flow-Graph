@@ -205,6 +205,12 @@ def idpaths(frame):
     ret = Button(frame, text='Return', height=5, width=30, font='Verdana 12 bold', command=lambda: Return(frame))
     ret.grid()
 
+def gr(frame):
+    frame.destroy()
+    frame=Frame(root)
+    frame.pack(fill=X)
+
+
 def main():
 
 
@@ -232,24 +238,25 @@ def main():
 
     Edges.pack(side='top')
 
-    PredicateNodes=Button(frame,text='Predicate Nodes',height=5,width=30,font='Verdana 12 bold',command=lambda: predicateNodes(frame))
+    PredicateNodes=Button(frame,text='Predicate Nodes',height=4,width=30,font='Verdana 12 bold',command=lambda: predicateNodes(frame))
 
     PredicateNodes.pack(side='top')
 
-    BoundedRegions=Button(frame,text='BoundedRegions',height=5,width=30,font='Verdana 12 bold',command=lambda: boundedregions(frame))
+    BoundedRegions=Button(frame,text='BoundedRegions',height=4,width=30,font='Verdana 12 bold',command=lambda: boundedregions(frame))
 
     BoundedRegions.pack(side='top')
 
-    IndependentPaths=Button(frame,text='Independent Paths',height=5,width=30,font='Verdana 12 bold',command=lambda: idpaths(frame))
+    IndependentPaths=Button(frame,text='Independent Paths',height=4,width=30,font='Verdana 12 bold',command=lambda: idpaths(frame))
 
     IndependentPaths.pack(side='top')
 
-    Refresh=Button(frame,text='Adjacency Matrix',height=7,width=30,font='Verdana 12 bold',command=lambda: edges(frame))
+    Refresh=Button(frame,text='Adjacency Matrix',height=5,width=30,font='Verdana 12 bold',command=lambda: edges(frame))
 
     Refresh.pack(side='top')
 
+    GR=Button(frame,text='Graphical Representation',height=5,width=30,font='Verdana 12 bold',command=lambda:gr(frame))
 
-
+    GR.pack(side='top')
 
 root = Tk()
 
